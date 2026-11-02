@@ -10,6 +10,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.sen.roy.RootsOfYggdrasil;
+import net.sen.roy.common.blocks.RiftBlock;
 
 import java.util.Locale;
 import java.util.function.Supplier;
@@ -17,6 +18,8 @@ import java.util.function.Supplier;
 public class RootsOfYggdrasilBlocks {
     private static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(RootsOfYggdrasil.MODID);
     private static final DeferredRegister.Items BLOCK_ITEMS = DeferredRegister.createItems(RootsOfYggdrasil.MODID);
+
+    public static final DeferredBlock<RiftBlock> RIFT_BLOCK = createBlock("rift_block", () -> new RiftBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
 
     private static DeferredBlock<Block> createBlock(String name) {
         return createBlock(name, () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));

@@ -14,11 +14,13 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.sen.roy.data.language.RootsOfYggdrasilLanguageProviderEnUs;
+import net.sen.roy.data.language.RootsOfYggdrasilLanguageProvider;
 import net.sen.roy.data.models.RootsOfYggdrasilBlockModel;
 import net.sen.roy.data.models.RootsOfYggdrasilBlockState;
 import net.sen.roy.data.models.RootsOfYggdrasilItemModel;
+import net.sen.roy.data.recipes.RootsOfYggdrasilRecipeProvider;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -33,7 +35,11 @@ public class DataGenerators {
 
         // -------- CLIENT DATA --------
         if (event.includeClient()) {
-            generator.addProvider(true, new RootsOfYggdrasilLanguageProviderEnUs(output));
+            RootsOfYggdrasilLanguageProvider.define();
+            for (String locale : List.of("en_us")) {
+                generator.addProvider(true, new RootsOfYggdrasilLanguageProvider(output, locale));
+            }
+
             generator.addProvider(true, new RootsOfYggdrasilBlockModel(output, helper));
             generator.addProvider(true, new RootsOfYggdrasilItemModel(output, helper));
             generator.addProvider(true, new RootsOfYggdrasilBlockState(output, helper));
@@ -44,6 +50,7 @@ public class DataGenerators {
             DatapackBuiltinEntriesProvider datapack = new RootsOfYggdrasilRegistriesProvider(output, lookup);
 
             generator.addProvider(true, datapack);
+            generator.addProvider(true, new RootsOfYggdrasilRecipeProvider(output, lookup));
         }
 
         // -------- PACK METADATA --------
